@@ -35,3 +35,6 @@ models:
 
 vars:
   "dbt_date:time_zone": "Europe/Berlin"
+
+flags:
+  send_anonymous_usage_stats: False
