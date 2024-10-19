@@ -1,0 +1,110 @@
+version: 2
+
+models:
+  - name: int_salesforce__account
+    columns:
+      - name: account_id
+        description: Primary key of the account object.
+        tests:
+          - unique
+          - not_null
+      - name: account_ownership
+        description: Indicates if the account belongs to a Public, Private or Other kind of entity.
+        tests:
+          - accepted_values:
+              values:
+                - Other
+                - Private
+                - Public
+  - name: int_salesforce__campaign
+    columns:
+      - name: campaign_id
+        description: Primary key of the campaign object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__case
+    columns:
+      - name: case_id
+        description: Primary key of the case object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__case_history_2
+    columns:
+      - name: case_history_id
+        description: Primary key of the case_history_2 object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__contact
+    columns:
+      - name: contact_id
+        description: Primary key of the contact object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__lead
+    columns:
+      - name: lead_id
+        description: Primary key of the lead object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__opportunity
+    columns:
+      - name: opportunity_id
+        description: Primary key of the opportunity object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__opportunity_history
+    columns:
+      - name: opportunity_history_id
+        description: Primary key of the opportunity_history object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__pricebook_entry
+    columns:
+      - name: pricebook_entry_id
+        description: Primary key of the pricebook_entry object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__product_2
+    columns:
+      - name: product_id
+        description: Primary key of the product_2 object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__record_type
+    columns:
+      - name: record_type_id
+        description: Primary key of the record_type object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__solution
+    columns:
+      - name: solution_id
+        description: Primary key of the solution object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__user
+    columns:
+      - name: user_id
+        description: Primary key of the user object.
+        tests:
+          - unique
+          - not_null
+  - name: int_salesforce__user_role
+    columns:
+      - name: user_role_id
+        description: Primary key of the user_role object.
+        tests:
+          - unique
+          - not_null
+
