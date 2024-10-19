@@ -34,7 +34,6 @@ reformatted AS (
     leadsource                    AS opportunity_lead_source,
     forecastcategory              AS opportunity_forecast_category,
     forecastcategoryname          AS forecast_category_name,
-    hasopportunitylineitem        AS has_opportunity_line_item,
     fiscalyear                    AS fiscal_year,
     fiscalquarter                 AS fiscal_quarter,
     deliveryinstallationstatus__c AS opportunity_delivery_installation_status,
@@ -44,10 +43,11 @@ reformatted AS (
     maincompetitors__c            AS opportunity_main_competitors,
 
 -- boolean conversions
-    {{ convert_to_boolean('isdeleted') }} AS is_opportunity_deleted,
-    {{ convert_to_boolean('isprivate') }} AS is_opportunity_private,
-    {{ convert_to_boolean('isclosed') }}  AS is_opportunity_closed,
-    {{ convert_to_boolean('iswon') }}     AS is_opportunity_won,
+    {{ convert_to_boolean('isdeleted') }}              AS is_opportunity_deleted,
+    {{ convert_to_boolean('isprivate') }}              AS is_opportunity_private,
+    {{ convert_to_boolean('isclosed') }}               AS is_opportunity_closed,
+    {{ convert_to_boolean('iswon') }}                  AS is_opportunity_won,
+    {{ convert_to_boolean('hasopportunitylineitem') }} AS has_opportunity_line_item,
 
 -- date conversions
     {{ dbt_date.convert_timezone('closedate', source_tz='America/Los_Angeles') }}           AS date_opportunity_close,
