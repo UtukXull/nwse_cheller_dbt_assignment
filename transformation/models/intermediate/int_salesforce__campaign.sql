@@ -9,11 +9,17 @@ with stage AS (
 reformatted AS (
 
   SELECT
-    campaign_id,
 
--- renaming
+--keys
+    campaign_id,
+    parentid                   AS parent__campaign_id,
+    ownerid                    AS campaign_owner__user_id,
+    createdbyid                AS created_by__user_id,
+    lastmodifiedbyid           AS last_modified_by__user_id,
+    campaignmemberrecordtypeid AS campaign_member_record_type_id,
+
+-- renamed fields
     name                              AS campaign_name,
-    parentid                          AS parent__campaign_id,
     type                              AS campaign_type,
     status                            AS campaign_status,
     expectedrevenue                   AS expected_revenue,
@@ -42,11 +48,7 @@ reformatted AS (
     hierarchyexpectedrevenue          AS hierarchy_expected_revenue,
     hierarchybudgetedcost             AS hierarchy_budgeted_cost,
     hierarchyactualcost               AS hierarchy_actual_cost,
-    ownerid                           AS campaign_owner__user_id,
-    createdbyid                       AS created_by__user_id,
-    lastmodifiedbyid                  AS last_modified_by__user_id,
     lastactivitydate                  AS last_activity_date,
-    campaignmemberrecordtypeid        AS campaign_member_record_type_id,
 
 -- boolean conversions
     {{ convert_to_boolean('isdeleted') }} AS is_deleted,

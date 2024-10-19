@@ -9,17 +9,19 @@ with stage AS (
 reformatted AS (
 
   SELECT
-    solution_id,
 
--- renaming
-    solutionnumber   AS solution_number,
-    solutionname     AS solution_name,
-    status           AS solution_status,
-    solutionnote     AS solution_note,
+--keys
+    solution_id,
     caseid           AS case_id,
     ownerid          AS solution_owner__user_id,
     createdbyid      AS created_by__user_id,
     lastmodifiedbyid AS last_modified_by__user_id,
+
+-- renamed fields
+    solutionnumber   AS solution_number,
+    solutionname     AS solution_name,
+    status           AS solution_status,
+    solutionnote     AS solution_note,
     timesused        AS times_used,
 
 -- boolean conversions

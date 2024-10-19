@@ -7,7 +7,15 @@ WITH stage AS (
 reformatted AS (
 
   SELECT
+
+--keys
     account_id,
+    parentid         AS account_parent__account_id,
+    ownerid          AS account_owner__user_id,
+    createdbyid      AS account_created_by__user_id,
+    lastmodifiedbyid AS account_last_modified_by__user_id,
+
+--direct fields
     phone,
     fax,
     website,
@@ -15,10 +23,9 @@ reformatted AS (
     industry,
     jigsaw,
 
--- renaming
+-- renamed fields
     name                    AS account_name,
     type                    AS account_type,
-    parentid                AS account_parent__account_id,
     billingstreet           AS billing_street,
     billingcity             AS billing_city,
     billingstate            AS billing_state,
@@ -43,9 +50,6 @@ reformatted AS (
     description             AS account_description,
     rating                  AS account_rating,
     site                    AS account_site,
-    ownerid                 AS account_owner__user_id,
-    createdbyid             AS account_created_by__user_id,
-    lastmodifiedbyid        AS account_last_modified_by__user_id,
     cleanstatus             AS clean_status,
     accountsource           AS account_source,
     dunsnumber              AS duns_number,

@@ -22,11 +22,13 @@ add_record_valid_from AS (
 reformatted AS (
 
   SELECT
-    opportunity_history_id,
 
--- renaming
-    opportunityid              AS opportunity_id,
-    createdbyid                AS opportunity_created_by__user_id,
+--keys
+    opportunity_history_id,
+    opportunityid AS opportunity_id,
+    createdbyid   AS opportunity_created_by__user_id,
+
+-- renamed fields
     createddateforinsert       AS opportunity_created_date_for_insert,
     stagename                  AS opportunity_stage_name,
     amount                     AS opportunity_amount,

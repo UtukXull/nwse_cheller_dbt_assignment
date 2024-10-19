@@ -7,7 +7,16 @@ with stage AS (
 reformatted AS (
 
   SELECT
+
+--keys
     contact_id,
+    accountid        AS contact__account_id,
+    reportstoid      AS contact_reports_to__user_id,
+    ownerid          AS contact_owner__user_id,
+    createdbyid      AS contact_created_by__user_id,
+    lastmodifiedbyid AS contact_last_modified_by__user_id,
+
+--direct fields
     salutation,
     phone,
     fax,
@@ -17,8 +26,7 @@ reformatted AS (
     jigsaw,
     pronouns,
 
--- renaming
-    accountid              AS contact__account_id,
+-- renamed fields
     firstname              AS first_name,
     lastname               AS last_name,
     otherstreet            AS other_street,
@@ -41,13 +49,9 @@ reformatted AS (
     homephone              AS home_phone,
     otherphone             AS other_phone,
     assistantphone         AS assistant_phone,
-    reportstoid            AS contact_reports_to__user_id,
     assistantname          AS assistant_name,
     leadsource             AS lead_source,
     description            AS contact_description,
-    ownerid                AS contact_owner__user_id,
-    createdbyid            AS contact_created_by__user_id,
-    lastmodifiedbyid       AS contact_last_modified_by__user_id,
     emailbouncedreason     AS email_bounced_reason,
     cleanstatus            AS clean_status,
     genderidentity         AS gender_identity,
