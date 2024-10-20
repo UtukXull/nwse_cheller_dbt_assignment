@@ -110,3 +110,7 @@ models:
           - relationships:
               to: ref('mrt__dim_date')
               field: date_id
+      - name: opportunity_amount
+        description: The amount that the opportunity is worth.
+        tests:
+          - not_null
