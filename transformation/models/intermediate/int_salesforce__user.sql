@@ -68,6 +68,9 @@ reformatted AS (
     chatteradoptionstage              AS chatter_adoption_stage,
     globalidentity                    AS global_identity,
 
+-- calculated fields
+    TRIM(CONCAT(firstname,' ',lastname)) AS full_name,
+
 -- boolean conversions
     {{ convert_to_boolean('isactive') }}                AS is_user_active,
     {{ convert_to_boolean('forecastenabled') }}         AS is_user_forecast_enabled,

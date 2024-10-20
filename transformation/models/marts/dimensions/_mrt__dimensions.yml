@@ -1,0 +1,120 @@
+version: 2
+
+models:
+  - name: mrt__dim_date
+    description: General data warehouse date dimension.
+    columns:
+      - name: date_id
+        description: Unique identifier for each specific date constructed from the date itself (YYYYMMDD).
+        tests:
+          - unique
+          - not_null
+
+  - name: mrt_salesforce__dim_account
+    description: Dimensional Salesforce account data
+    columns:
+      - name: account_id
+        description: Unique identifier for the Salesforce account.
+        tests:
+          - unique
+          - not_null
+      - name: account_created__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: account_last_modified__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: account_last_activity__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: account_sla_expiration__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: account_owner__user_id
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+      - name: account_created_by__user_id
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+      - name: account_last_modified_by__user_id
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+
+  - name: mrt_salesforce__dim_opportunity_history
+    description: Dimensional Salesforce opportunity history data
+    columns:
+      - name: opportunity_id
+        description: Unique identifier for the Salesforce opportunity.
+        tests:
+          - not_null
+      - name: date_opportunity_record_valid_from
+        description: The start of the validity period for the historical opportunity record.
+        tests:
+          - not_null
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - opportunity_id
+            - date_opportunity_record_valid_from
+
+  - name: mrt_salesforce__dim_opportunity
+    description: Dimensional Salesforce opportunity data
+    columns:
+      - name: opportunity_id
+        description: Unique identifier for the Salesforce opportunity.
+        tests:
+          - unique
+          - not_null
+
+  - name: mrt_salesforce__dim_user
+    description: Dimensional Salesforce user data
+    columns:
+      - name: user_id
+        description: Unique identifier for the Salesforce user.
+        tests:
+          - unique
+          - not_null
+      - name: user_last_login__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: user_last_password_change__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: user_created__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: user_last_modified__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: created_by__user_id
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+      - name: last_modified_by__user_id
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id

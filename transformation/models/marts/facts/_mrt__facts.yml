@@ -1,0 +1,93 @@
+version: 2
+
+models:
+  - name: mrt_salesforce__fact_opportunity_history
+    description: Fact table for Salesforce opportunity history.
+    columns:
+      - name: opportunity_id
+        description: Unique identifier for the Salesforce opportunity.
+        tests:
+          - not_null
+      - name: date_opportunity_record_valid_from
+        description: The start of the validity period for the historical opportunity record.
+        tests:
+          - not_null
+      - name: account_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_salesforce__account')
+              field: account_id
+      - name: opportunity_owner__user_id
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+      - name: opportunity_created_by__user_id
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+      - name: opportunity_created__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: opportunity_close__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: account_type
+        tests:
+          - accepted_values:
+              values: ['Customer - Channel', 'Customer - Direct']
+      - name: opportunity_type
+        tests:
+          - accepted_values:
+              values: ['New Customer', 'Existing Customer - Upgrade', 'Existing Customer - Replacement']
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - opportunity_id
+            - date_opportunity_record_valid_from
+
+  - name: mrt_salesforce__fact_opportunity
+    description: Fact table for Salesforce opportunity.
+    columns:
+      - name: opportunity_id
+        description: Unique identifier for the Salesforce opportunity.
+        tests:
+          - unique
+          - not_null
+      - name: account_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_salesforce__account')
+              field: account_id
+      - name: opportunity_created_by__user_id
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+      - name: opportunity_owner__user_id
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+      - name: opportunity_created__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: opportunity_last_modified__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: opportunity_close__date_id
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id

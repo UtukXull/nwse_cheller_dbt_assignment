@@ -10,9 +10,16 @@ user AS (
 
   SELECT
     bu.user_id,
+    {{ transform_date_to_id('date_user_last_login', 'bu') }} AS user_last_login__date_id,
+    {{ transform_date_to_id('date_user_last_password_change', 'bu') }} AS user_last_password_change__date_id,
+    {{ transform_date_to_id('date_user_created', 'bu') }} AS user_created__date_id,
+    {{ transform_date_to_id('date_user_last_modified', 'bu') }} AS user_last_modified__date_id,
+    bu.created_by__user_id,
+    bu.last_modified_by__user_id,
     bu.username,
     bu.first_name,
     bu.last_name,
+    bu.full_name,
     bu.is_user_active,
     bu.company_name,
     bu.country,
@@ -24,17 +31,9 @@ user AS (
     bu.user_type,
     bu.user_subtype,
     bu.language_locale_key,
-    {{ transform_date_to_id('date_user_last_login', 'bu') }} AS user_last_login__date_id,
-    {{ transform_date_to_id('date_user_last_password_change', 'bu') }} AS user_last_password_change__date_id,
-    {{ transform_date_to_id('date_user_created', 'bu') }} AS user_created__date_id,
-    bu.created_by__user_id,
-    TRIM(CONCAT(cr.first_name,' ',cr.last_name)) AS created_by_name,
-    {{ transform_date_to_id('date_user_last_modified', 'bu') }} AS user_last_modified__date_id,
-    bu.last_modified_by__user_id,
-    TRIM(CONCAT(mod.first_name,' ',mod.last_name)) AS last_modified_by_name,
-    bu.number_of_failed_logins,
-    bu.user__contact_id,
-    bu.user__account_id
+    cr.full_name AS created_by_name,
+    mod.full_name AS last_modified_by_name,
+    bu.number_of_failed_logins
 
   FROM base_user bu
   LEFT JOIN base_user cr
