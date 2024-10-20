@@ -7,7 +7,17 @@ WITH stage AS (
 reformatted AS (
 
   SELECT
+
+--keys
     user_id,
+    contactid           AS user__contact_id,
+    accountid           AS user__account_id,
+    delegatedapproverid AS delegated_approver__user_id,
+    managerid           AS manager__user_id,
+    createdbyid         AS created_by__user_id,
+    lastmodifiedbyid    AS last_modified_by__user_id,
+
+--direct fields
     username,
     division,
     department,
@@ -21,7 +31,7 @@ reformatted AS (
     email,
     signature,
 
--- renaming
+-- renamed fields
     firstname                         AS first_name,
     lastname                          AS last_name,
     companyname                       AS company_name,
@@ -46,13 +56,7 @@ reformatted AS (
     endday                            AS end_day,
     languagelocalekey                 AS language_locale_key,
     employeenumber                    AS employee_number,
-    delegatedapproverid               AS delegated_approver__user_id,
-    managerid                         AS manager__user_id,
-    createdbyid                       AS created_by__user_id,
-    lastmodifiedbyid                  AS last_modified_by__user_id,
     numberoffailedlogins              AS number_of_failed_logins,
-    contactid                         AS user__contact_id,
-    accountid                         AS user__account_id,
     extension                         AS extension,
     federationidentifier              AS federation_identifier,
     aboutme                           AS about_me,
@@ -63,6 +67,9 @@ reformatted AS (
     sharingtype                       AS sharing_type,
     chatteradoptionstage              AS chatter_adoption_stage,
     globalidentity                    AS global_identity,
+
+-- calculated fields
+    TRIM(CONCAT(firstname,' ',lastname)) AS full_name,
 
 -- boolean conversions
     {{ convert_to_boolean('isactive') }}                AS is_user_active,

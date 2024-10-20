@@ -9,14 +9,16 @@ with stage AS (
 reformatted AS (
 
   SELECT
-    case_history_id,
 
--- renaming
+--keys
+    case_history_id,
     caseid           AS case_id,
     ownerid          AS case_history_owner__user_id,
-    status           AS case_history_status,
-    previousupdate   AS previous_update,
     lastmodifiedbyid AS last_modified_by__user_id,
+
+-- renamed fields
+    status         AS case_history_status,
+    previousupdate AS previous_update,
 
 -- boolean conversions
     {{ convert_to_boolean('isdeleted') }} AS is_deleted,

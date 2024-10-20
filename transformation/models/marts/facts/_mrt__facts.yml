@@ -1,0 +1,116 @@
+version: 2
+
+models:
+  - name: mrt_salesforce__fact_opportunity_history
+    description: Fact table for Salesforce opportunity history.
+    columns:
+      - name: opportunity_id
+        description: Unique identifier for the Salesforce opportunity.
+        tests:
+          - not_null
+      - name: date_opportunity_record_valid_from
+        description: The start of the validity period for the historical opportunity record.
+        tests:
+          - not_null
+      - name: account_id
+        description: Unique identifier for the Salesforce account associated with the opportunity.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_salesforce__account')
+              field: account_id
+      - name: opportunity_owner__user_id
+        description: The user ID of the owner of the opportunity, represented as a foreign key to `int_salesforce__user`.
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+          - not_null
+      - name: opportunity_created_by__user_id
+        description: The user ID of the user who created the opportunity, represented as a foreign key to `int_salesforce__user`.
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+          - not_null
+      - name: opportunity_created__date_id
+        description: The date when the opportunity was created, represented as a foreign key to `mrt__dim_date`.
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+          - not_null
+      - name: opportunity_close__date_id
+        description: The expected close date of the opportunity, represented as a foreign key to `mrt__dim_date`.
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: account_type
+        description: The type of the account associated with the opportunity (e.g., 'Customer - Channel', 'Customer - Direct').
+        tests:
+          - accepted_values:
+              values: ['Customer - Channel', 'Customer - Direct']
+      - name: opportunity_type
+        description: The type of the opportunity (e.g., 'New Customer', 'Existing Customer - Upgrade', 'Existing Customer - Replacement').
+        tests:
+          - accepted_values:
+              values: ['New Customer', 'Existing Customer - Upgrade', 'Existing Customer - Replacement']
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - opportunity_id
+            - date_opportunity_record_valid_from
+
+  - name: mrt_salesforce__fact_opportunity
+    description: Fact table for Salesforce opportunity.
+    columns:
+      - name: opportunity_id
+        description: Unique identifier for the Salesforce opportunity.
+        tests:
+          - unique
+          - not_null
+      - name: account_id
+        description: Unique identifier for the Salesforce account associated with the opportunity.
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_salesforce__account')
+              field: account_id
+      - name: opportunity_created_by__user_id
+        description: The user ID of the user who created the opportunity, represented as a foreign key to `int_salesforce__user`.
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+          - not_null
+      - name: opportunity_owner__user_id
+        description: The user ID of the owner of the opportunity, represented as a foreign key to `int_salesforce__user`.
+        tests:
+          - relationships:
+              to: ref('int_salesforce__user')
+              field: user_id
+          - not_null
+      - name: opportunity_created__date_id
+        description: The date when the opportunity was created, represented as a foreign key to `mrt__dim_date`.
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+          - not_null
+      - name: opportunity_last_modified__date_id
+        description: The date when the opportunity was last modified, represented as a foreign key to `mrt__dim_date`.
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: opportunity_close__date_id
+        description: The expected close date of the opportunity, represented as a foreign key to `mrt__dim_date`.
+        tests:
+          - relationships:
+              to: ref('mrt__dim_date')
+              field: date_id
+      - name: opportunity_amount
+        description: The amount that the opportunity is worth.
+        tests:
+          - not_null

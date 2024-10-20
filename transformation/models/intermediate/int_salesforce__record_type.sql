@@ -9,16 +9,18 @@ with stage AS (
 reformatted AS (
 
   SELECT
-    record_type_id,
 
--- renaming
+--keys
+    record_type_id,
+    businessprocessid AS business_process_id,
+    createdbyid       AS created_by__user_id,
+    lastmodifiedbyid  AS last_modified_by__user_id,
+
+-- renamed fields
     name              AS record_type_name,
     modulenamespace   AS module_namespace,
     description       AS record_type_description,
-    businessprocessid AS business_process_id,
     sobjecttype       AS object_type,
-    createdbyid       AS created_by__user_id,
-    lastmodifiedbyid  AS last_modified_by__user_id,
 
 -- boolean conversions
     {{ convert_to_boolean('isdeleted') }} AS is_deleted,

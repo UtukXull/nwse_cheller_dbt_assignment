@@ -7,10 +7,20 @@ WITH stage AS (
 reformatted AS (
 
   SELECT
-    opportunity_id,
 
--- renaming
-    accountid                     AS account_id,
+--keys
+    opportunity_id,
+    accountid               AS account_id,
+    contactid               AS contact_id,
+    contractid              AS contract_id,
+    pricebook2id            AS pricebook_id,
+    campaignid              AS campaign_id,
+    ownerid                 AS opportunity_owner__user_id,
+    createdbyid             AS opportunity_created_by__user_id,
+    lastmodifiedbyid        AS opportunity_last_modified_by__user_id,
+    primarypartneraccountid AS opportunity_primary_partner__account_id,
+
+-- renamed fields
     name                          AS opportunity_name,
     description                   AS opportunity_description,
     stagename                     AS opportunity_stage_name,
@@ -24,17 +34,8 @@ reformatted AS (
     leadsource                    AS opportunity_lead_source,
     forecastcategory              AS opportunity_forecast_category,
     forecastcategoryname          AS forecast_category_name,
-    campaignid                    AS campaign_id,
-    hasopportunitylineitem        AS has_opportunity_line_item,
-    pricebook2id                  AS pricebook_id,
-    ownerid                       AS opportunity_owner__user_id,
-    createdbyid                   AS opportunity_created_by__user_id,
-    lastmodifiedbyid              AS opportunity_last_modified_by__user_id,
     fiscalyear                    AS fiscal_year,
     fiscalquarter                 AS fiscal_quarter,
-    contactid                     AS contact_id,
-    primarypartneraccountid       AS opportunity_primary_partner__account_id,
-    contractid                    AS contract_id,
     deliveryinstallationstatus__c AS opportunity_delivery_installation_status,
     trackingnumber__c             AS opportunity_tracking_number,
     ordernumber__c                AS opportunity_order_number,
@@ -42,10 +43,11 @@ reformatted AS (
     maincompetitors__c            AS opportunity_main_competitors,
 
 -- boolean conversions
-    {{ convert_to_boolean('isdeleted') }} AS is_opportunity_deleted,
-    {{ convert_to_boolean('isprivate') }} AS is_opportunity_private,
-    {{ convert_to_boolean('isclosed') }}  AS is_opportunity_closed,
-    {{ convert_to_boolean('iswon') }}     AS is_opportunity_won,
+    {{ convert_to_boolean('isdeleted') }}              AS is_opportunity_deleted,
+    {{ convert_to_boolean('isprivate') }}              AS is_opportunity_private,
+    {{ convert_to_boolean('isclosed') }}               AS is_opportunity_closed,
+    {{ convert_to_boolean('iswon') }}                  AS is_opportunity_won,
+    {{ convert_to_boolean('hasopportunitylineitem') }} AS has_opportunity_line_item,
 
 -- date conversions
     {{ dbt_date.convert_timezone('closedate', source_tz='America/Los_Angeles') }}           AS date_opportunity_close,

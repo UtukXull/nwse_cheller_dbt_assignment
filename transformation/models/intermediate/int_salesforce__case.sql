@@ -9,19 +9,25 @@ with stage AS (
 reformatted AS (
 
   SELECT
-    case_id,
 
--- renaming
-    masterrecordid          AS master_record_id,
-    casenumber              AS case_number,
-    contactid               AS contact_id,
-    accountid               AS account_id,
-    assetid                 AS asset_id,
-    productid               AS product_id,
-    entitlementid           AS entitlement_id,
-    sourceid                AS source_id,
-    businesshoursid         AS business_hours_id,
-    parentid                AS parent__case_id,
+--keys
+    case_id,
+    servicecontractid AS service_contract_id,
+    parentid          AS parent__case_id,
+    ownerid           AS case_owner__user_id,
+    createdbyid       AS created_by__user_id,
+    lastmodifiedbyid  AS last_modified_by__user_id,
+    masterrecordid    AS master_record_id,
+    casenumber        AS case_number,
+    contactid         AS contact_id,
+    accountid         AS account_id,
+    assetid           AS asset_id,
+    productid         AS product_id,
+    entitlementid     AS entitlement_id,
+    sourceid          AS source_id,
+    businesshoursid   AS business_hours_id,
+
+-- renamed fields
     suppliedname            AS supplied_name,
     suppliedemail           AS supplied_email,
     suppliedphone           AS supplied_phone,
@@ -33,10 +39,6 @@ reformatted AS (
     subject                 AS case_subject,
     priority                AS case_priority,
     description             AS case_description,
-    ownerid                 AS case_owner__user_id,
-    createdbyid             AS created_by__user_id,
-    lastmodifiedbyid        AS last_modified_by__user_id,
-    servicecontractid       AS service_contract_id,
     engineeringreqnumber__c AS engineering_req_number,
     product__c              AS product,
 

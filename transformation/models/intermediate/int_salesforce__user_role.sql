@@ -8,21 +8,23 @@ with stage AS (
 reformatted AS (
 
   SELECT
-    user_role_id,
 
--- renaming
+--keys
+    user_role_id,
+    parentroleid         AS parent__user_role_id,
+    forecastuserid       AS forecast__user_id,
+    lastmodifiedbyid     AS last_modified_by__user_id,
+    portalaccountid      AS portal__account_id,
+    portalaccountownerid AS portal_account_owner__user_id,
+
+-- renamed fields
     name                             AS user_role_name,
-    parentroleid                     AS parent__user_role_id,
     rollupdescription                AS rollup_description,
     opportunityaccessforaccountowner AS opportunity_access_for_account_owner,
     caseaccessforaccountowner        AS case_access_for_account_owner,
     contactaccessforaccountowner     AS contact_access_for_account_owner,
-    forecastuserid                   AS forecast__user_id,
-    lastmodifiedbyid                 AS last_modified_by__user_id,
-    portalaccountid                  AS portal__account_id,
     portaltype                       AS portal_type,
     portalrole                       AS portal_role,
-    portalaccountownerid             AS portal_account_owner__user_id,
 
 -- boolean conversions
     {{ convert_to_boolean('mayforecastmanagershare') }} AS may_forecast_manager_share,

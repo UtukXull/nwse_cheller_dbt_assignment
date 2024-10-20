@@ -9,24 +9,26 @@ with stage AS (
 reformatted AS (
 
   SELECT
-    product_id,
 
--- renaming
+--keys
+    product_id,
+    sellerid             AS seller_id,
+    externaldatasourceid AS external_data_source_id,
+    externalid           AS external_id,
+    createdbyid          AS created_by__user_id,
+    lastmodifiedbyid     AS last_modified_by__user_id,
+    sourceproductid      AS source__product_id,
+
+-- renamed fields
     name                  AS product_name,
     productcode           AS product_code,
     description           AS product_description,
-    createdbyid           AS created_by__user_id,
-    lastmodifiedbyid      AS last_modified_by__user_id,
     family                AS product_family,
-    externaldatasourceid  AS external_data_source_id,
-    externalid            AS external_id,
     displayurl            AS display_url,
     quantityunitofmeasure AS quantity_unit_of_measure,
     stockkeepingunit      AS stock_keeping_unit,
     type                  AS product_type,
     productclass          AS product_class,
-    sourceproductid       AS source__product_id,
-    sellerid              AS seller_id,
 
 -- boolean conversions
     {{ convert_to_boolean('isactive') }}   AS is_active,

@@ -9,14 +9,16 @@ with stage AS (
 reformatted AS (
 
   SELECT
-    pricebook_entry_id,
 
--- renaming
+--keys
+    pricebook_entry_id,
     pricebook2id     AS pricebook_id,
     product2id       AS product_id,
-    unitprice        AS unit_price,
     createdbyid      AS created_by__user_id,
     lastmodifiedbyid AS last_modified_by__user_id,
+
+-- renamed fields
+    unitprice AS unit_price,
 
 -- boolean conversions
     {{ convert_to_boolean('isdeleted') }}        AS is_deleted,
